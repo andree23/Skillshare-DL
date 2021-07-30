@@ -90,6 +90,14 @@ class Skillshare(object):
                     ),
                     video_id=video_id,
                 )
+                self.download_srt(
+                    fpath='{base_path}/{session}.srt'.format(
+                        base_path=base_path,
+                        session=file_name,
+                    ),
+                    srt_id=srt_id,
+                )
+
 
                 print('')
 
@@ -122,6 +130,7 @@ class Skillshare(object):
         meta_url = 'https://edge.api.brightcove.com/playback/v1/accounts/{account_id}/videos/{video_id}'.format(
             account_id=self.brightcove_account_id,
             video_id=video_id,
+            srt_id=srt_id,
         )
 
         scraper = cloudscraper.create_scraper(
