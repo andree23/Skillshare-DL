@@ -130,7 +130,7 @@ class Skillshare(object):
         meta_url = 'https://edge.api.brightcove.com/playback/v1/accounts/{account_id}/videos/{video_id}'.format(
             account_id=self.brightcove_account_id,
             video_id=video_id,
-            vtt_id=vtt_id,
+            
         )
 
         scraper = cloudscraper.create_scraper(
@@ -187,12 +187,74 @@ class Skillshare(object):
                     sys.stdout.flush()
 
             print('')
+            
+            
+            
+             def download_vtt(self, fpath, vtt_id):
+        meta_url = 'https://edge.api.brightcove.com/playback/v1/accounts/{account_id}/videos/{vtt_id}'.format(
+            account_id=self.brightcove_account_id,
+            vtt_id=vtt_id,
+            
+        )
+
+        scraper = cloudscraper.create_scraper(
+            browser={
+                'custom': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3',
+            },
+            delay=10
+        )
+
+        meta_res = scraper.get(
+            meta_url,
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3',
+                'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+                'Accept-Encoding': 'none',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Connection': 'keep-alive',
+                'Accept': 'application/json;pk={}'.format(self.pk),
+                'Origin': 'https://www.skillshare.com'
+            }
+        )
+
+        if meta_res.status_code != 200:
+            raise Exception('Failed to fetch video meta')
+
+        if meta_res.json()['sources'][6]['container'] == 'VTT' and 'src' in meta_res.json()['sources'][6]:
+            dl_url = meta_res.json()['sources'][6]['src']
+            # break
+        else:
+            dl_url = meta_res.json()['sources'][1]['src']
+
+        print('Downloading {}...'.format(fpath))
+
+        if os.path.exists(fpath):
+            print('VTT already downloaded, skipping...')
+            return
+
+        with open(fpath, 'wb') as f:
+            response = requests.get(dl_url, allow_redirects=True, stream=True)
+            total_length = response.headers.get('content-length')
+
+            if not total_length:
+                f.write(response.content)
+
+            else:
+                dl = 0
+                total_length = int(total_length)
+
+                for data in response.iter_content(chunk_size=4096):
+                    dl += len(data)
+                    f.write(data)
+                    done = int(50 * dl / total_length)
+                    sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50 - done)))
+                    sys.stdout.flush()
+
+            print('')
 
 def splash():
 
     print(r"""   
-              
-
                 Visit Us for more Cool Stuff: https://blackpearl.biz/
 
                 """)
