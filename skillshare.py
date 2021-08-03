@@ -90,12 +90,12 @@ class Skillshare(object):
                     ),
                     video_id=video_id,
                 )
-                self.download_srt(
-                    fpath='{base_path}/{session}.srt'.format(
+                self.download_vtt(
+                    fpath='{base_path}/{session}.vtt'.format(
                         base_path=base_path,
                         session=file_name,
                     ),
-                    srt_id=srt_id,
+                    vtt_id=vtt_id,
                 )
 
 
@@ -191,15 +191,7 @@ class Skillshare(object):
 def splash():
 
     print(r"""   
-                 ____  _    _ _ _     _                          ____  _     
-                / ___|| | _(_) | |___| |__   __ _ _ __ ___      |  _ \| |    
-                \___ \| |/ / | | / __| '_ \ / _` | '__/ _ \_____| | | | |    
-                 ___) |   <| | | \__ \ | | | (_| | | |  __/_____| |_| | |___ 
-                |____/|_|\_\_|_|_|___/_| |_|\__,_|_|  \___|     |____/|_____|  
-                     _ __ ___  _ _  _ _ _  ___  _ _ 
-                    | / /| __>| \ || | | || . || | |
-                    |  \ | _> |   || | | ||   |\   /
-                    |_\_\|___>|_\_||__/_/ |_|_| |_| 
+              
 
                 Visit Us for more Cool Stuff: https://blackpearl.biz/
 
