@@ -130,7 +130,7 @@ class Skillshare(object):
         meta_url = 'https://edge.api.brightcove.com/playback/v1/accounts/{account_id}/videos/{video_id}'.format(
             account_id=self.brightcove_account_id,
             video_id=video_id,
-            srt_id=srt_id,
+            vtt_id=vtt_id,
         )
 
         scraper = cloudscraper.create_scraper(
