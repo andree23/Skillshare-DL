@@ -187,7 +187,7 @@ class Skillshare(object):
                     sys.stdout.flush()
 
             print('')
-            
+            def splash():
             
             
              def download_vtt(self, fpath, vtt_id):
