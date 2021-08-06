@@ -90,7 +90,6 @@ class Skillshare(object):
                     ),
                     video_id=video_id,
                 )
-                
 
                 print('')
 
@@ -123,7 +122,6 @@ class Skillshare(object):
         meta_url = 'https://edge.api.brightcove.com/playback/v1/accounts/{account_id}/videos/{video_id}'.format(
             account_id=self.brightcove_account_id,
             video_id=video_id,
-            
         )
 
         scraper = cloudscraper.create_scraper(
@@ -180,10 +178,10 @@ class Skillshare(object):
                     sys.stdout.flush()
 
             print('')
-            def splash():
-            
+
+def splash():
 
     print(r"""   
+            
                 Visit Us for more Cool Stuff: https://blackpearl.biz/
-
                 """)
